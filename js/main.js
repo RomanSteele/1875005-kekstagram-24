@@ -1,31 +1,22 @@
 //Функция, возвращающая случайное целое число из переданного диапазона включительно.
 
-function getRandomNumber(min , max) {
-  let randomNumber;
-  if(max > min & Math.sign(max)>=0 & Math.sign(min)>=0){
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
-    return randomNumber;
-  }
-  return 'Alert!';
-}
+function getRandomPositiveInteger (a1, b1) {
+  const lower = Math.ceil(Math.min(Math.abs(a1), Math.abs(b1)));
+  const upper = Math.floor(Math.max(Math.abs(a1), Math.abs(b1)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
 
-getRandomNumber(0,100);
-
+getRandomPositiveInteger;
 //Функция для проверки максимальной длины строки.
 
-function getCheckLength (checkMaxLength, maxLength){
-  return !(checkMaxLength.length >= maxLength);
-}
-getCheckLength(0,100);
+function checkStringLength (string, length) {
+  return string.length <= length;
+};
+
+checkStringLength;
 
 //4.9
-
-const eachArray = (currentLength)  => {
-  const array = new Array(currentLength);
-  return Math.floor(Math.random() * (array.length));
-};
 
 const DESCRIPTIONS = [
   'Приятно, граждане, наблюдать, как стремящиеся вытеснить традиционное производство, нанотехнологии, которые представляют собой яркий пример континентально-европейского типа политической культуры, будут заблокированы в рамках своих собственных рациональных ограничений.',
@@ -56,25 +47,27 @@ const NAMES = [
 
 const POSTS_COUNT = 25;
 
-const randomName = Math.floor(Math.random() * NAMES.length);
-const randomMessage = Math.floor(Math.random() * MESSAGES.length);
-const randomDescription = Math.floor(Math.random() * DESCRIPTIONS.length);
+const createPost = () => {
 
-const commentArray = () => ({
-  id: eachArray(250)+1,
-  avatar: `img/${  eachArray(6)+1  }.svg`,
-  message: MESSAGES[randomMessage],
-  name: NAMES[randomName],
-});
+  const randomName = Math.floor(Math.random() * NAMES.length);
+  const randomMessage = Math.floor(Math.random() * MESSAGES.length);
+  const randomDescription = Math.floor(Math.random() * DESCRIPTIONS.length);
+  const createComment = {
+    id: getRandomPositiveInteger(1,250),
+    avatar: `img/${  getRandomPositiveInteger(1,6)  }.svg`,
+    message: MESSAGES[randomMessage],
+    name: NAMES[randomName],
+  };
 
-const createPost = () => ({
-  id: eachArray(24)+1,
-  url: `photos/${  eachArray(6)+1  }.jpg`,
-  description: DESCRIPTIONS[randomDescription],
-  likes: eachArray(185)+15,
-  comments: commentArray(),
-});
-
+  const newPost ={
+    id: getRandomPositiveInteger(1,25),
+    url: `photos/${  getRandomPositiveInteger(1,6)  }.jpg`,
+    description: DESCRIPTIONS[randomDescription],
+    likes: getRandomPositiveInteger(15,200),
+    comments: createComment,
+  };
+  return newPost;
+};
 const posts = Array.from({length: POSTS_COUNT}, createPost);
 
 posts;
