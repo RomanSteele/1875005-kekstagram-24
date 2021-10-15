@@ -5,14 +5,14 @@ function getRandomPositiveInteger (a1, b1) {
   const upper = Math.floor(Math.max(Math.abs(a1), Math.abs(b1)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-};
+}
 
 getRandomPositiveInteger;
 //Функция для проверки максимальной длины строки.
 
 function checkStringLength (string, length) {
   return string.length <= length;
-};
+}
 
 checkStringLength;
 
@@ -47,20 +47,23 @@ const NAMES = [
 
 const POSTS_COUNT = 25;
 
-const createPost = () => {
+const createPost = (id,idx) => {
 
   const randomName = Math.floor(Math.random() * NAMES.length);
   const randomMessage = Math.floor(Math.random() * MESSAGES.length);
   const randomDescription = Math.floor(Math.random() * DESCRIPTIONS.length);
+
+  const randomId = () => parseInt(Date.now() * Math.random(),10);
+
   const createComment = {
-    id: getRandomPositiveInteger(1,250),
+    id: randomId(),
     avatar: `img/${  getRandomPositiveInteger(1,6)  }.svg`,
     message: MESSAGES[randomMessage],
     name: NAMES[randomName],
   };
 
   const newPost ={
-    id: getRandomPositiveInteger(1,25),
+    id: idx+1,
     url: `photos/${  getRandomPositiveInteger(1,6)  }.jpg`,
     description: DESCRIPTIONS[randomDescription],
     likes: getRandomPositiveInteger(15,200),
