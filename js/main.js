@@ -10,24 +10,27 @@ function createPost(id, idx) {
 
   const randomId = () => parseInt(Date.now() * Math.random(), 10);
 
-  const createComment = {
-    id: randomId(),
-    avatar: `img/${getRandomPositiveInteger(1, 6)}.svg`,
-    message: MESSAGES[randomMessage],
-    name: NAMES[randomName],
-  };
+  function createComment (){
+
+    const randomComment = {
+      id: randomId(),
+      avatar: `img/${getRandomPositiveInteger(1, 6)}.svg`,
+      message: MESSAGES[randomMessage],
+      name: NAMES[randomName],
+    };
+    return randomComment;
+  }
 
   const newPost = {
     id: idx + 1,
     url: `photos/${getRandomPositiveInteger(1, 6)}.jpg`,
     description: DESCRIPTIONS[randomDescription],
     likes: getRandomPositiveInteger(15, 200),
-    comments: createComment,
-  };
+    comments: Array.from({length: getRandomPositiveInteger(1,200)}, createComment)};
   return newPost;
 }
 const posts = () => Array.from({length: POSTS_COUNT}, createPost);
 
-posts;
+posts();
 
 export {posts};

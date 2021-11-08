@@ -11,7 +11,7 @@ similarPosts.forEach(({url,likes,comments}) => {
   const postElement = similarPostsTemplate.cloneNode(true);
   postElement.querySelector('.picture__img').src = url;
   postElement.querySelector('.picture__likes').textContent = likes;
-  postElement.querySelector('.picture__comments').textContent = comments;
+  postElement.querySelector('.picture__comments').textContent = comments.length;
   similarListFragment.appendChild(postElement);
 });
 
