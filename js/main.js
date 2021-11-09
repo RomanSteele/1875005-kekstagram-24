@@ -14,7 +14,7 @@ function createPost(id, idx) {
 
     const randomComment = {
       id: randomId(),
-      avatar: `img/${getRandomPositiveInteger(1, 6)}.svg`,
+      avatar: `img/${getRandomPositiveInteger(1, 25)}.svg`,
       message: MESSAGES[randomMessage],
       name: NAMES[randomName],
     };
@@ -23,7 +23,7 @@ function createPost(id, idx) {
 
   const newPost = {
     id: idx + 1,
-    url: `photos/${getRandomPositiveInteger(1, 6)}.jpg`,
+    url: `photos/${getRandomPositiveInteger(1, 25)}.jpg`,
     description: DESCRIPTIONS[randomDescription],
     likes: getRandomPositiveInteger(15, 200),
     comments: Array.from({length: getRandomPositiveInteger(1,200)}, createComment)};
