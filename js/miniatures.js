@@ -16,3 +16,14 @@ similarPosts.forEach(({url,likes,comments}) => {
 });
 
 similarListElement.appendChild(similarListFragment);
+
+/*similarListElement.onclick = function(event) {
+  const target = event.target; // где был клик?
+
+  if (target.tagName !== 'a') return;
+
+  // действие над (target);
+};
+*/
+
+
