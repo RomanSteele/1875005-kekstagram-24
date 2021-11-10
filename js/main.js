@@ -1,13 +1,12 @@
 
 import {DESCRIPTIONS, MESSAGES, NAMES, POSTS_COUNT} from './data.js';
 import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
+import {showPostPreview, fillPostData} from './post-preview.js';
+import {createAndFillPostElement} from './miniatures.js';
+
 
 function createPost(id, idx) {
-/*
-  const randomName =  Math.floor(Math.random() * NAMES.length);
-  const randomMessage = Math.floor(Math.random() * MESSAGES.length);
-  const randomDescription = Math.floor(Math.random() * DESCRIPTIONS.length);
-*/
+
   const randomId = () => parseInt(Date.now() * Math.random(), 10);
 
   function createComment (){
@@ -30,7 +29,20 @@ function createPost(id, idx) {
   return newPost;
 }
 const posts = () => Array.from({length: POSTS_COUNT}, createPost);
+const postsList = posts();
+const postsWrapper = document.querySelector('.pictures');
 
-posts();
+postsList.forEach((post)=> {
+  const element = createAndFillPostElement(post);
+  const postElement = element.querySelector('.picture');
+  postElement.addEventListener('click', (event) => {
+    const selectedPost = postsList.find((item) => item.id === +event.target.dataset.id);
+    if(!selectedPost) {
+      return;
+    }
+    showPostPreview();
+    fillPostData(selectedPost);
+  });
 
-export {posts};
+  postsWrapper.append(element);
+});
