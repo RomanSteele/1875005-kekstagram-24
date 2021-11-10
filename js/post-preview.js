@@ -24,6 +24,22 @@ document.addEventListener('keydown', (evt) =>{
   }
 });
 
+function createFilledCommentElement (commentData){
+  const element = document.createElement('li');
+  element.classList.add('social__comment');
+  const image = document.createElement('img');
+  image.classList.add('social__picture');
+  image.setAttribute('src', commentData.avatar);
+  image.setAttribute('alt', commentData.name);
+  image.setAttribute('width','35');
+  image.setAttribute('height','35');
+  element.appendChild(image);
+  const para = document.createElement('p');
+  para.textContent = commentData.message;
+  element.appendChild(para);
+  return element;
+}
+
 function fillPostData(postData){
 
   const postImage = postPreview.querySelector('.big-picture__img img');
@@ -44,23 +60,6 @@ function fillPostData(postData){
     const commentElement = createFilledCommentElement(comment);
     commentList.append(commentElement);
   });
-}
-
-
-function createFilledCommentElement (commentData){
-  const element = document.createElement('li');
-  element.classList.add('social__comment');
-  const image = document.createElement('img');
-  image.classList.add('social__picture');
-  image.setAttribute('src', commentData.avatar);
-  image.setAttribute('alt', commentData.name);
-  image.setAttribute('width','35');
-  image.setAttribute('height','35');
-  element.appendChild(image);
-  const para = document.createElement('p');
-  para.textContent = commentData.message;
-  element.appendChild(para);
-  return element;
 }
 
 export{showPostPreview, fillPostData};

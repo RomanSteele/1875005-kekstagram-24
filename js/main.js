@@ -28,6 +28,7 @@ function createPost(id, idx) {
     comments: Array.from({length: getRandomPositiveInteger(1,10)}, createComment)};
   return newPost;
 }
+
 const posts = () => Array.from({length: POSTS_COUNT}, createPost);
 const postsList = posts();
 const postsWrapper = document.querySelector('.pictures');
