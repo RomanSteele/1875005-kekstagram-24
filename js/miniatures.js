@@ -1,18 +1,15 @@
-import {posts} from './main.js';
-
-const similarListElement = document.querySelector('.pictures');
 const similarPostsTemplate = document.querySelector('#picture').content;
-
-const similarPosts = posts();
-
 const similarListFragment = document.createDocumentFragment();
 
-similarPosts.forEach(({url,likes,comments}) => {
+const createAndFillPostElement = ({url,likes,comments, id}) => {
   const postElement = similarPostsTemplate.cloneNode(true);
+  postElement.querySelector('.picture__img').setAttribute('data-id', id);
   postElement.querySelector('.picture__img').src = url;
   postElement.querySelector('.picture__likes').textContent = likes;
   postElement.querySelector('.picture__comments').textContent = comments.length;
   similarListFragment.appendChild(postElement);
-});
 
-similarListElement.appendChild(similarListFragment);
+  return similarListFragment;
+};
+
+export {createAndFillPostElement};
