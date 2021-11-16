@@ -2,7 +2,11 @@ const pageBody = document.querySelector('body');
 const postPreview = pageBody.querySelector('.big-picture');
 const commentList = document.querySelector('.social__comments');
 const closeButtonElement = document.querySelector('.big-picture__cancel');
+const loadMoreComments = document.querySelector('.comments-loader');
+const commentsDisplayed = postPreview.querySelector('.showed__comments-count');
 
+let postComments = [];
+let displayedComments = [];
 
 function showPostPreview(){
   postPreview.classList.remove('hidden');
@@ -12,6 +16,10 @@ function showPostPreview(){
 function hidePostPreview(){
   postPreview.classList.add('hidden');
   pageBody.classList.remove('modal-open');
+
+  loadMoreComments.classList.remove('hidden');
+  postComments = [];
+  displayedComments = [];
 }
 
 closeButtonElement.addEventListener('click', ()=>{
@@ -56,10 +64,41 @@ function fillPostData(postData){
 
 
   commentList.textContent = '';
-  postData.comments.forEach((comment) => {
+
+  if(postData.comments.length <= 5) {
+    loadMoreComments.classList.add('hidden');
+    commentsDisplayed.textContent = postData.comments.length;
+    postData.comments.forEach((comment) => {
+      const commentElement = createFilledCommentElement(comment);
+      commentList.append(commentElement);
+    });
+
+    return;
+  }
+
+  postComments = [...postData.comments];
+  displayedComments = postComments.slice(displayedComments.length, displayedComments.length + 5);
+  commentsDisplayed.textContent = displayedComments.length;
+  displayedComments.forEach((comment) => {
     const commentElement = createFilledCommentElement(comment);
     commentList.append(commentElement);
   });
 }
+
+document.body.addEventListener('click', (evt)=>{
+  if(loadMoreComments.contains(evt.target)) {
+    commentList.textContent = '';
+    displayedComments = [...displayedComments, ...postComments.slice(displayedComments.length, displayedComments.length +5)];
+    commentsDisplayed.textContent = displayedComments.length;
+    displayedComments.forEach((comment) => {
+      const commentElement = createFilledCommentElement(comment);
+      commentList.append(commentElement);
+    });
+
+    if(displayedComments.length === postComments.length) {
+      loadMoreComments.classList.add('hidden');
+    }
+  }
+});
 
 export{showPostPreview, fillPostData};
