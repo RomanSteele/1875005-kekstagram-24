@@ -3,7 +3,7 @@ import {DESCRIPTIONS, MESSAGES, NAMES, POSTS_COUNT} from './data.js';
 import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
 import {showPostPreview, fillPostData} from './post-preview.js';
 import {createAndFillPostElement} from './miniatures.js';
-
+import './form.js';
 
 function createPost(id, idx) {
 
@@ -47,3 +47,4 @@ postsList.forEach((post)=> {
 
   postsWrapper.append(element);
 });
+
