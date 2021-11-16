@@ -44,7 +44,7 @@ hashTagInput.addEventListener('keydown', (evt) => {
   const hashTags = hashtagValue.split(' ');
   if(hashTags.length > HASH_TAGS_MAX_COUNT){
     // eslint-disable-next-line no-template-curly-in-string
-    hashTagInput.setCustomValidity('Max hashtags count equal ${HASH_TAGS_MAX_COUNT}');
+    hashTagInput.setCustomValidity(`Max hashtags count equal ${HASH_TAGS_MAX_COUNT}`);
     return;
   }
 
