@@ -4,6 +4,7 @@ import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
 import {showPostPreview, fillPostData} from './post-preview.js';
 import {createAndFillPostElement} from './miniatures.js';
 import './form.js';
+import './sliders.js';
 
 function createPost(id, idx) {
 
