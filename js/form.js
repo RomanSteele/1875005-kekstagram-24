@@ -48,8 +48,8 @@ hashTagInput.addEventListener('keydown', (evt) => {
     return;
   }
 
-  for (let i = 0; i < hashTags.length; i++){
-    const hashTag = hashTags[i];
+  for (let idx = 0; idx < hashTags.length; idx++){
+    const hashTag = hashTags[idx];
     const isValid = hashTagChecker.test(hashTag);
 
     if(!isValid){
