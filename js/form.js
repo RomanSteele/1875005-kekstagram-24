@@ -95,7 +95,7 @@ const setUserFormSubmit = (onSuccess) => {
 
 export {setUserFormSubmit,hideFormAdder};
 
-
+/*
 document.addEventListener('keydown', (evt) =>{
   if(evt.key === 'Escape') {
     document.querySelector('.success').classList.add('hidden');
@@ -107,3 +107,4 @@ document.addEventListener('click', () =>{
   document.querySelector('.success').classList.add('hidden');
   document.querySelector('.error').classList.add('hidden');
 });
+*/
