@@ -35,7 +35,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
   .then((data) => {
     renderSimilarList(data);
 
-    const popular = [...data].sort((a, b) => b.comments.length - a.comments.length).slice(0, 10);
+    const popular = [...data].sort((adx, bdx) => bdx.comments.length - adx.comments.length).slice(0, 10);
     const randomPosts = [];
 
     for(let idx = 0; idx < 10; idx++) {
