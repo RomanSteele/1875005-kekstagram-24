@@ -1,7 +1,10 @@
+//import{hideFormAdder} from './form.js';
+const shutDownFormButton = document.querySelector('#upload-cancel');
 const makeImageSmaller = document.querySelector('.scale__control--smaller');
 const makeImageBigger = document.querySelector('.scale__control--bigger');
 const imageSize = document.querySelector('.scale__control--value');
 const uploadedImagePreview = document.querySelector('.img-upload__preview');
+const form = document.querySelector('#upload-select-image');
 //
 
 imageSize.value = `${100  }%`;
@@ -194,3 +197,17 @@ effectRadioButton.forEach((element) => {
   });
 });
 
+
+shutDownFormButton.addEventListener('click', ()=>{
+  valueElement.value = 0;
+  sliderElement.noUiSlider.set(0);
+  uploadedImagePreview.classList = 'img-upload__preview';
+  sliderElement.classList.add('hidden');
+});
+
+form.addEventListener('submit', () => {
+  valueElement.value = 0;
+  sliderElement.noUiSlider.set(0);
+  uploadedImagePreview.classList = 'img-upload__preview';
+  sliderElement.classList.add('hidden');
+});
