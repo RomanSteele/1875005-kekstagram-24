@@ -1,8 +1,9 @@
 import {showPostPreview, fillPostData} from './post-preview.js';
 import {createAndFillPostElement} from './miniatures.js';
 import {setUserFormSubmit,hideFormAdder} from './form.js';
-import './sliders.js';
 import {debounce} from './utils/debounce.js';
+import './sliders.js';
+import './picture.js';
 
 
 const postsWrapper = document.querySelector('.pictures');

@@ -7,8 +7,6 @@ const hashTagChecker = /^#[A-Za-zА-Я-а-яЁё0-9]{1,19}$/;
 const hashTagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const HASH_TAGS_MAX_COUNT = 5;
-//const errorButton = document.querySelector('.error__button');
-//const successButton = document.querySelector('.success__button');
 
 function showFormAdder (){
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
@@ -94,17 +92,3 @@ const setUserFormSubmit = (onSuccess) => {
 
 
 export {setUserFormSubmit,hideFormAdder};
-
-/*
-document.addEventListener('keydown', (evt) =>{
-  if(evt.key === 'Escape') {
-    document.querySelector('.success').classList.add('hidden');
-    document.querySelector('.error').classList.add('hidden');
-  }
-});
-
-document.addEventListener('click', () =>{
-  document.querySelector('.success').classList.add('hidden');
-  document.querySelector('.error').classList.add('hidden');
-});
-*/
