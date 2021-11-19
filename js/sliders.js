@@ -1,15 +1,13 @@
-//import{hideFormAdder} from './form.js';
 const shutDownFormButton = document.querySelector('#upload-cancel');
 const makeImageSmaller = document.querySelector('.scale__control--smaller');
 const makeImageBigger = document.querySelector('.scale__control--bigger');
 const imageSize = document.querySelector('.scale__control--value');
 const uploadedImagePreview = document.querySelector('.img-upload__preview');
 const form = document.querySelector('#upload-select-image');
-//
+
 
 imageSize.value = `${100  }%`;
 
-//уменьшение изображения и счетчика %
 makeImageSmaller.addEventListener('click', () =>{
   if(parseInt(imageSize.value,10) <= 100 && 25 < parseInt(imageSize.value,10)){
 
@@ -18,7 +16,6 @@ makeImageSmaller.addEventListener('click', () =>{
   }
 });
 
-//увеличение изображения и счетчика %
 makeImageBigger.addEventListener('click', () =>{
 
   if(parseInt(imageSize.value,10) < 100 && 25 <= parseInt(imageSize.value,10)){
@@ -94,7 +91,7 @@ effectRadioButton.forEach((element) => {
       });
       sliderElement.noUiSlider.on('update', (values, handle) => {
         valueElement.value = values[handle];
-        uploadedImagePreview.style.filter = `grayscale( ${parseFloat(valueElement.value,10)})`;
+        uploadedImagePreview.style.filter = `grayscale( ${parseFloat(valueElement.value)})`;
       });
     }
   });
@@ -119,7 +116,7 @@ effectRadioButton.forEach((element) => {
       });
       sliderElement.noUiSlider.on('update', (values, handle) => {
         valueElement.value = values[handle];
-        uploadedImagePreview.style.filter = `sepia( ${parseFloat(valueElement.value,10)})`;
+        uploadedImagePreview.style.filter = `sepia( ${parseFloat(valueElement.value)})`;
       });
     }
   });
@@ -143,7 +140,7 @@ effectRadioButton.forEach((element) => {
       });
       sliderElement.noUiSlider.on('update', (values, handle) => {
         valueElement.value = values[handle];
-        uploadedImagePreview.style.filter = `invert( ${parseFloat(valueElement.value,10)}%)`;
+        uploadedImagePreview.style.filter = `invert( ${parseFloat(valueElement.value)}%)`;
       });
     }
   });
@@ -167,7 +164,7 @@ effectRadioButton.forEach((element) => {
       });
       sliderElement.noUiSlider.on('update', (values, handle) => {
         valueElement.value = values[handle];
-        uploadedImagePreview.style.filter = `blur( ${parseFloat(valueElement.value,10)}px)`;
+        uploadedImagePreview.style.filter = `blur( ${parseFloat(valueElement.value)}px)`;
       });
     }
   });
@@ -191,7 +188,7 @@ effectRadioButton.forEach((element) => {
       });
       sliderElement.noUiSlider.on('update', (values, handle) => {
         valueElement.value = values[handle];
-        uploadedImagePreview.style.filter = `brightness( ${parseFloat(valueElement.value,10)})`;
+        uploadedImagePreview.style.filter = `brightness( ${parseFloat(valueElement.value)})`;
       });
     }
   });
