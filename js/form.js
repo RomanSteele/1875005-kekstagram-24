@@ -36,6 +36,25 @@ function hideErrorMessage(event) {
     document.removeEventListener('click', hideErrorHandler);
   }
 }
+
+function hideSuccessHandler({target}) {
+  const successBlock = document.querySelector('.success__inner');
+  if(successBlock.contains(target)) {
+    if(target.classList.contains('success__button')) {
+      hideAlert(true);
+      document.removeEventListener('click', hideSuccessHandler);
+      document.removeEventListener('keydown', hideSuccessMessage);
+      resetEffect();
+    }
+    return;
+  }
+
+  hideAlert(true);
+  document.removeEventListener('click', hideSuccessHandler);
+  document.removeEventListener('keydown', hideSuccessMessage);
+  resetEffect();
+}
+
 function hideSuccessMessage(event) {
   if(isEsc(event.key)){
     hideAlert(true);
@@ -81,23 +100,6 @@ function hideFormAdder(){
   hashTagInput.removeEventListener('keyup', hashTagHandler);
 }
 
-function hideSuccessHandler({target}) {
-  const successBlock = document.querySelector('.success__inner');
-  if(successBlock.contains(target)) {
-    if(target.classList.contains('success__button')) {
-      hideAlert(true);
-      document.removeEventListener('click', hideSuccessHandler);
-      document.removeEventListener('keydown', hideSuccessMessage);
-      resetEffect();
-    }
-    return;
-  }
-
-  hideAlert(true);
-  document.removeEventListener('click', hideSuccessHandler);
-  document.removeEventListener('keydown', hideSuccessMessage);
-  resetEffect();
-}
 
 function hideErrorHandler({target}) {
   const errorBlock = document.querySelector('.error__inner');
