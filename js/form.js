@@ -72,7 +72,7 @@ function hideSuccessHandler({target}) {
     if(target.classList.contains('success__button')) {
       hideAlert(true);
       document.removeEventListener('click', hideSuccessHandler);
-      document.removeEventListener('keydown', hideSuccessMessage);
+      document.removeEventListener('keydown', hideSuccessMessage());
       resetEffect();
     }
     return;
@@ -80,7 +80,7 @@ function hideSuccessHandler({target}) {
 
   hideAlert(true);
   document.removeEventListener('click', hideSuccessHandler);
-  document.removeEventListener('keydown', hideSuccessMessage);
+  document.removeEventListener('keydown', hideSuccessMessage());
   resetEffect();
 }
 
@@ -98,14 +98,14 @@ function hideErrorHandler({target}) {
     if(target.classList.contains('error__button')) {
       hideAlert(false);
       document.removeEventListener('click', hideErrorHandler);
-      document.removeEventListener('keydown', hideErrorMessage);
+      document.removeEventListener('keydown', hideErrorMessage());
     }
     return;
   }
 
   hideAlert(false);
   document.removeEventListener('click', hideErrorHandler);
-  document.removeEventListener('keydown', hideErrorMessage);
+  document.removeEventListener('keydown', hideErrorMessage());
 }
 
 function hideErrorMessage (event) {
