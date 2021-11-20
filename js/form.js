@@ -29,22 +29,6 @@ function preventEsc(event) {
   event.stopPropagation();
 }
 
-const hideErrorMessage = (event) => {
-  if(isEsc(event.key)){
-    hideAlert(false);
-    document.removeEventListener('keydown', hideErrorMessage);
-    document.removeEventListener('click', hideErrorHandler);
-  }
-};
-
-const hideSuccessMessage = (event) => {
-  if(isEsc(event.key)){
-    hideAlert(true);
-    document.removeEventListener('keydown', hideSuccessMessage);
-    document.removeEventListener('click', hideSuccessHandler);
-  }
-};
-
 function hashTagHandler(evt) {
   const hashtagValue = String(evt.target.value.toLowerCase().trim());
   const hashTags = hashtagValue.split(' ');
@@ -100,6 +84,14 @@ function hideSuccessHandler({target}) {
   resetEffect();
 }
 
+function hideSuccessMessage (event) {
+  if(isEsc(event.key)){
+    hideAlert(true);
+    document.removeEventListener('keydown', hideSuccessMessage);
+    document.removeEventListener('click', hideSuccessHandler);
+  }
+}
+
 function hideErrorHandler({target}) {
   const errorBlock = document.querySelector('.error__inner');
   if(errorBlock.contains(target)) {
@@ -114,6 +106,14 @@ function hideErrorHandler({target}) {
   hideAlert(false);
   document.removeEventListener('click', hideErrorHandler);
   document.removeEventListener('keydown', hideErrorMessage);
+}
+
+function hideErrorMessage (event) {
+  if(isEsc(event.key)){
+    hideAlert(false);
+    document.removeEventListener('keydown', hideErrorMessage);
+    document.removeEventListener('click', hideErrorHandler);
+  }
 }
 
 function hideImageForm(event) {
