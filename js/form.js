@@ -25,6 +25,38 @@ function showFormAdder (){
   resetScale();
 }
 
+function preventEsc(event) {
+  event.stopPropagation();
+}
+
+function hashTagHandler(evt) {
+  const hashtagValue = String(evt.target.value.toLowerCase().trim());
+  const hashTags = hashtagValue.split(' ');
+
+  if(hashTags.length > HASH_TAGS_MAX_COUNT){
+    hashTagInput.setCustomValidity(`Max hashtags count equal ${HASH_TAGS_MAX_COUNT}`);
+    return;
+  }
+  const uniqTags = [...new Set(hashTags)];
+
+  if(uniqTags.length !== hashTags.length) {
+    hashTagInput.setCustomValidity('You should provide uniq tags');
+    return;
+  }
+
+  for (let idx = 0; idx < hashTags.length; idx++){
+    const hashTag = hashTags[idx];
+    const isValid = hashTagChecker.test(hashTag);
+
+    if(!isValid){
+      hashTagInput.setCustomValidity('Hashtag is not valid!');
+      break;
+    } else{
+      hashTagInput.setCustomValidity('');
+    }
+  }
+}
+
 function hideFormAdder(){
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
@@ -34,6 +66,39 @@ function hideFormAdder(){
   hashTagInput.removeEventListener('keyup', hashTagHandler);
 }
 
+function hideSuccessHandler({target}) {
+  const successBlock = document.querySelector('.success__inner');
+  if(successBlock.contains(target)) {
+    if(target.classList.contains('success__button')) {
+      hideAlert(true);
+      document.removeEventListener('click', hideSuccessHandler);
+      document.removeEventListener('keydown', hideSuccessMessage);
+      resetEffect();
+    }
+    return;
+  }
+
+  hideAlert(true);
+  document.removeEventListener('click', hideSuccessHandler);
+  document.removeEventListener('keydown', hideSuccessMessage);
+  resetEffect();
+}
+
+function hideErrorHandler({target}) {
+  const errorBlock = document.querySelector('.error__inner');
+  if(errorBlock.contains(target)) {
+    if(target.classList.contains('error__button')) {
+      hideAlert(false);
+      document.removeEventListener('click', hideErrorHandler);
+      document.removeEventListener('keydown', hideErrorMessage);
+    }
+    return;
+  }
+
+  hideAlert(false);
+  document.removeEventListener('click', hideErrorHandler);
+  document.removeEventListener('keydown', hideErrorMessage);
+}
 
 function hideImageForm(event) {
   if(isEsc(event.key)){
@@ -88,68 +153,6 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-function preventEsc(event) {
-  event.stopPropagation();
-}
-function hashTagHandler(evt) {
-  const hashtagValue = String(evt.target.value.toLowerCase().trim());
-  const hashTags = hashtagValue.split(' ');
-
-  if(hashTags.length > HASH_TAGS_MAX_COUNT){
-    hashTagInput.setCustomValidity(`Max hashtags count equal ${HASH_TAGS_MAX_COUNT}`);
-    return;
-  }
-  const uniqTags = [...new Set(hashTags)];
-
-  if(uniqTags.length !== hashTags.length) {
-    hashTagInput.setCustomValidity('You should provide uniq tags');
-    return;
-  }
-
-  for (let idx = 0; idx < hashTags.length; idx++){
-    const hashTag = hashTags[idx];
-    const isValid = hashTagChecker.test(hashTag);
-
-    if(!isValid){
-      hashTagInput.setCustomValidity('Hashtag is not valid!');
-      break;
-    } else{
-      hashTagInput.setCustomValidity('');
-    }
-  }
-}
-function hideSuccessHandler({target}) {
-  const successBlock = document.querySelector('.success__inner');
-  if(successBlock.contains(target)) {
-    if(target.classList.contains('success__button')) {
-      hideAlert(true);
-      document.removeEventListener('click', hideSuccessHandler);
-      document.removeEventListener('keydown', hideSuccessMessage);
-      resetEffect();
-    }
-    return;
-  }
-
-  hideAlert(true);
-  document.removeEventListener('click', hideSuccessHandler);
-  document.removeEventListener('keydown', hideSuccessMessage);
-  resetEffect();
-}
-function hideErrorHandler({target}) {
-  const errorBlock = document.querySelector('.error__inner');
-  if(errorBlock.contains(target)) {
-    if(target.classList.contains('error__button')) {
-      hideAlert(false);
-      document.removeEventListener('click', hideErrorHandler);
-      document.removeEventListener('keydown', hideErrorMessage);
-    }
-    return;
-  }
-
-  hideAlert(false);
-  document.removeEventListener('click', hideErrorHandler);
-  document.removeEventListener('keydown', hideErrorMessage);
-}
 
 shutDownFormButton.addEventListener('click', ()=>{
   hideFormAdder();
