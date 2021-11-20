@@ -29,21 +29,21 @@ function preventEsc(event) {
   event.stopPropagation();
 }
 
-function hideErrorMessage(event) {
+const hideErrorMessage = (event) => {
   if(isEsc(event.key)){
     hideAlert(false);
     document.removeEventListener('keydown', hideErrorMessage);
-    document.removeEventListener('click', hideErrorHandler());
+    document.removeEventListener('click', hideErrorHandler);
   }
-}
+};
 
-function hideSuccessMessage(event) {
+const hideSuccessMessage = (event) => {
   if(isEsc(event.key)){
     hideAlert(true);
     document.removeEventListener('keydown', hideSuccessMessage);
-    document.removeEventListener('click', hideSuccessHandler());
+    document.removeEventListener('click', hideSuccessHandler);
   }
-}
+};
 
 function hashTagHandler(evt) {
   const hashtagValue = String(evt.target.value.toLowerCase().trim());
