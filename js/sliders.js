@@ -1,6 +1,4 @@
-const previewImageElement = document.querySelector('.img-upload__preview');
 const uploadedImagePreview = document.querySelector('.img-upload__preview');
-
 const sliderEffectWrapper = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
@@ -18,43 +16,6 @@ const makeImageSmaller = document.querySelector('.scale__control--smaller');
 const makeImageBigger = document.querySelector('.scale__control--bigger');
 const imageSize = document.querySelector('.scale__control--value');
 
-makeImageSmaller.addEventListener('click', imageScaleHandler);
-makeImageBigger.addEventListener('click', imageScaleHandler);
-
-effectsContainer.addEventListener('click', imageEffectHandler);
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 0,
-  step: 1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
-});
-
-function resetEffect() {
-  sliderEffectWrapper.classList.add('hidden');
-  valueElement.value = '';
-  uploadedImagePreview.className = '';
-  uploadedImagePreview.classList.add('img-upload__preview');
-  uploadedImagePreview.style.filter = '';
-}
-function resetScale() {
-  imageSize.value = `${100}%`;
-  previewImageElement.style.transform = '';
-}
 function imageScaleHandler(event) {
   const biggerClass = 'scale__control--bigger';
   if(event.target.classList.contains(biggerClass)) {
@@ -172,6 +133,43 @@ function imageEffectHandler(event) {
       uploadedImagePreview.style.filter = `brightness(${parseFloat(valueElement.value)})`;
     });
   }
+}
+
+makeImageSmaller.addEventListener('click', imageScaleHandler);
+makeImageBigger.addEventListener('click', imageScaleHandler);
+effectsContainer.addEventListener('click', imageEffectHandler);
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 0,
+  step: 1,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
+});
+
+function resetEffect() {
+  sliderEffectWrapper.classList.add('hidden');
+  valueElement.value = '';
+  uploadedImagePreview.className = '';
+  uploadedImagePreview.classList.add('img-upload__preview');
+  uploadedImagePreview.style.filter = '';
+}
+function resetScale() {
+  imageSize.value = `${100}%`;
+  uploadedImagePreview.style.transform = '';
 }
 
 export {resetEffect, resetScale, imageScaleHandler, imageEffectHandler};

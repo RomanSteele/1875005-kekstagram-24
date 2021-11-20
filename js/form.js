@@ -1,6 +1,6 @@
 
 import {createGoodAlert, createBadAlert, hideAlert} from './utils/Alert.js';
-import {resetEffect, resetScale, imageScaleHandler, imageEffectHandler} from './sliders.js';
+import {resetEffect, resetScale} from './sliders.js';
 import { isEsc } from './utils/helpers.js';
 
 
@@ -12,11 +12,9 @@ const hashTagChecker = /^#[A-Za-zА-Я-а-яЁё0-9]{1,19}$/;
 const hashTagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const HASH_TAGS_MAX_COUNT = 5;
-const makeImageSmaller = document.querySelector('.scale__control--smaller');
-const makeImageBigger = document.querySelector('.scale__control--bigger');
 const sliderEffectWrapper = document.querySelector('.img-upload__effect-level');
 const valueElement = document.querySelector('.effect-level__value');
-const effectsContainer = document.querySelector('.effects__list');
+
 
 function showFormAdder (){
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
@@ -32,9 +30,6 @@ function hideFormAdder(){
   document.querySelector('body').classList.remove('modal-open');
   form.reset();
   resetEffect();
-  makeImageSmaller.removeEventListener('click', imageScaleHandler);
-  makeImageBigger.removeEventListener('click', imageScaleHandler);
-  effectsContainer.removeEventListener('click', imageEffectHandler);
   hashTagInput.removeEventListener(('keydown'), preventEsc);
   hashTagInput.removeEventListener('keyup', hashTagHandler);
 }
@@ -110,7 +105,7 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-// Hepler functions
+
 function preventEsc(event) {
   event.stopPropagation();
 }
@@ -148,6 +143,7 @@ function hideSuccessHandler({target}) {
       hideAlert(true);
       document.removeEventListener('click', hideSuccessHandler);
       document.removeEventListener('keydown', hideSuccessMessage);
+      resetEffect();
     }
     return;
   }
@@ -155,6 +151,7 @@ function hideSuccessHandler({target}) {
   hideAlert(true);
   document.removeEventListener('click', hideSuccessHandler);
   document.removeEventListener('keydown', hideSuccessMessage);
+  resetEffect();
 }
 function hideErrorHandler({target}) {
   const errorBlock = document.querySelector('.error__inner');
