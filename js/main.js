@@ -2,9 +2,8 @@ import {showPostPreview, fillPostData} from './post-preview.js';
 import {createAndFillPostElement} from './miniatures.js';
 import {setUserFormSubmit,hideFormAdder} from './form.js';
 import {debounce} from './utils/debounce.js';
-import './sliders.js';
 import './picture.js';
-
+const RANDOM_POSTS_ARRAY_LENGTH = 10;
 
 const postsWrapper = document.querySelector('.pictures');
 const renderSimilarList = (similarPosts) => {
@@ -24,7 +23,6 @@ const renderSimilarList = (similarPosts) => {
   });
 };
 
-
 fetch('https://24.javascript.pages.academy/kekstagram/data')
   .then((response) => {
     if (response.ok) {
@@ -39,7 +37,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
     const popular = [...data].sort((adx, bdx) => bdx.comments.length - adx.comments.length).slice(0, 10);
     const randomPosts = [];
 
-    for(let idx = 0; idx < 10; idx++) {
+    for(let idx = 0; idx < RANDOM_POSTS_ARRAY_LENGTH; idx++) {
       const randomindex = Math.floor(Math.random() * data.length);
       const elem = data[randomindex];
       if(randomPosts.find((item) => item.id === elem.id)) {
@@ -63,7 +61,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
       randomFilter.classList.remove('img-filters__button--active');
       discussedFilter.classList.remove('img-filters__button--active');
       renderSimilarList(data);
-    },500));
+    }));
 
     randomFilter.addEventListener('click', debounce(() => {
       document.querySelectorAll('.picture').forEach((element) => {
@@ -73,7 +71,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
       defaultFilter.classList.remove('img-filters__button--active');
       discussedFilter.classList.remove('img-filters__button--active');
       renderSimilarList(randomPosts);
-    },500));
+    }));
 
     discussedFilter.addEventListener('click', debounce(() => {
       document.querySelectorAll('.picture').forEach((element) => {
@@ -83,7 +81,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
       defaultFilter.classList.remove('img-filters__button--active');
       randomFilter.classList.remove('img-filters__button--active');
       debounce(renderSimilarList(popular));
-    },500));
+    }));
   });
 
 setUserFormSubmit(hideFormAdder);

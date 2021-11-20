@@ -1,4 +1,9 @@
-import {createGoodAlert, createBadAlert} from './utils/Alert.js';
+
+import {createGoodAlert, createBadAlert, hideAlert} from './utils/Alert.js';
+import {resetEffect, resetScale, imageScaleHandler, imageEffectHandler} from './sliders.js';
+import { isEsc } from './utils/helpers.js';
+
+
 const pageBody = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
 const shutDownFormButton = document.querySelector('#upload-cancel');
@@ -7,28 +12,58 @@ const hashTagChecker = /^#[A-Za-zА-Я-а-яЁё0-9]{1,19}$/;
 const hashTagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const HASH_TAGS_MAX_COUNT = 5;
+const makeImageSmaller = document.querySelector('.scale__control--smaller');
+const makeImageBigger = document.querySelector('.scale__control--bigger');
+const sliderEffectWrapper = document.querySelector('.img-upload__effect-level');
+const valueElement = document.querySelector('.effect-level__value');
+const effectsContainer = document.querySelector('.effects__list');
 
 function showFormAdder (){
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
+
+  sliderEffectWrapper.classList.add('hidden');
+  valueElement.value = 0;
+  resetScale();
 }
 
 function hideFormAdder(){
   document.querySelector('.img-upload__overlay').classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   form.reset();
+  resetEffect();
+  makeImageSmaller.removeEventListener('click', imageScaleHandler);
+  makeImageBigger.removeEventListener('click', imageScaleHandler);
+  effectsContainer.removeEventListener('click', imageEffectHandler);
+  hashTagInput.removeEventListener(('keydown'), preventEsc);
+  hashTagInput.removeEventListener('keyup', hashTagHandler);
 }
 
 shutDownFormButton.addEventListener('click', ()=>{
   hideFormAdder();
 });
 
-document.addEventListener('keydown', (evt) =>{
-  if(evt.key === 'Escape'){
+document.addEventListener('keydown', hideImageForm);
+
+function hideImageForm(event) {
+  if(isEsc(event.key)){
     hideFormAdder();
   }
-});
-
+}
+function hideErrorMessage(event) {
+  if(isEsc(event.key)){
+    hideAlert(false);
+    document.removeEventListener('keydown', hideErrorMessage);
+    document.removeEventListener('click', hideErrorHandler);
+  }
+}
+function hideSuccessMessage(event) {
+  if(isEsc(event.key)){
+    hideAlert(true);
+    document.removeEventListener('keydown', hideSuccessMessage);
+    document.removeEventListener('click', hideSuccessHandler);
+  }
+}
 
 formElement.addEventListener('change', () => {
   showFormAdder();
@@ -39,29 +74,8 @@ descriptionInput.addEventListener('keydown', (evt) => {
 });
 
 
-hashTagInput.addEventListener('keydown', (evt) => {
-  evt.stopPropagation();
-
-  const hashtagValue = String(evt.target.value.toLowerCase().trim());
-  const hashTags = hashtagValue.split(' ');
-  if(hashTags.length > HASH_TAGS_MAX_COUNT){
-    hashTagInput.setCustomValidity(`Max hashtags count equal ${HASH_TAGS_MAX_COUNT}`);
-    return;
-  }
-
-  for (let idx = 0; idx < hashTags.length; idx++){
-    const hashTag = hashTags[idx];
-    const isValid = hashTagChecker.test(hashTag);
-
-    if(!isValid){
-      hashTagInput.setCustomValidity('Hashtag is not valid!');
-      break;
-    } else{
-      hashTagInput.setCustomValidity('');
-    }
-  }
-
-});
+hashTagInput.addEventListener(('keydown'), preventEsc);
+hashTagInput.addEventListener('keyup', hashTagHandler);
 
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
@@ -78,17 +92,85 @@ const setUserFormSubmit = (onSuccess) => {
         if (response.ok) {
           onSuccess();
           pageBody.appendChild(createGoodAlert());
+          document.addEventListener('click', hideSuccessHandler);
+          document.addEventListener('keydown', hideSuccessMessage);
         } else {
           hideFormAdder();
           pageBody.appendChild(createBadAlert());
+          document.addEventListener('click', hideErrorHandler);
+          document.addEventListener('keydown', hideErrorMessage);
         }
       })
       .catch(() => {
         hideFormAdder();
         pageBody.appendChild(createBadAlert());
+        document.addEventListener('click', hideErrorHandler);
+        document.addEventListener('keydown', hideErrorMessage);
       });
   });
 };
+
+// Hepler functions
+function preventEsc(event) {
+  event.stopPropagation();
+}
+function hashTagHandler(evt) {
+  const hashtagValue = String(evt.target.value.toLowerCase().trim());
+  const hashTags = hashtagValue.split(' ');
+
+  if(hashTags.length > HASH_TAGS_MAX_COUNT){
+    hashTagInput.setCustomValidity(`Max hashtags count equal ${HASH_TAGS_MAX_COUNT}`);
+    return;
+  }
+  const uniqTags = [...new Set(hashTags)];
+
+  if(uniqTags.length !== hashTags.length) {
+    hashTagInput.setCustomValidity('You should provide uniq tags');
+    return;
+  }
+
+  for (let idx = 0; idx < hashTags.length; idx++){
+    const hashTag = hashTags[idx];
+    const isValid = hashTagChecker.test(hashTag);
+
+    if(!isValid){
+      hashTagInput.setCustomValidity('Hashtag is not valid!');
+      break;
+    } else{
+      hashTagInput.setCustomValidity('');
+    }
+  }
+}
+function hideSuccessHandler({target}) {
+  const successBlock = document.querySelector('.success__inner');
+  if(successBlock.contains(target)) {
+    if(target.classList.contains('success__button')) {
+      hideAlert(true);
+      document.removeEventListener('click', hideSuccessHandler);
+      document.removeEventListener('keydown', hideSuccessMessage);
+    }
+    return;
+  }
+
+  hideAlert(true);
+  document.removeEventListener('click', hideSuccessHandler);
+  document.removeEventListener('keydown', hideSuccessMessage);
+}
+function hideErrorHandler({target}) {
+  const errorBlock = document.querySelector('.error__inner');
+  if(errorBlock.contains(target)) {
+    if(target.classList.contains('error__button')) {
+      hideAlert(false);
+      document.removeEventListener('click', hideErrorHandler);
+      document.removeEventListener('keydown', hideErrorMessage);
+    }
+    return;
+  }
+
+  hideAlert(false);
+  document.removeEventListener('click', hideErrorHandler);
+  document.removeEventListener('keydown', hideErrorMessage);
+}
 
 
 export {setUserFormSubmit,hideFormAdder};

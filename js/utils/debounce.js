@@ -1,5 +1,5 @@
 
-function debounce (callback, timeoutDelay) {
+function debounce (callback, timeoutDelay = 500) {
   let timeoutId;
 
   return (...rest) => {
