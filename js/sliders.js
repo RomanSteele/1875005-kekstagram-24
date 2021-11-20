@@ -43,6 +43,19 @@ function updateEffect(initialValue, effectName) {
   uploadedImagePreview.classList.add('img-upload__preview');
   uploadedImagePreview.classList.add(`effects__preview--${effectName}`);
 }
+
+function resetEffect() {
+  sliderEffectWrapper.classList.add('hidden');
+  valueElement.value = '';
+  uploadedImagePreview.className = '';
+  uploadedImagePreview.classList.add('img-upload__preview');
+  uploadedImagePreview.style.filter = '';
+}
+function resetScale() {
+  imageSize.value = `${100}%`;
+  uploadedImagePreview.style.transform = '';
+}
+
 function imageEffectHandler(event) {
   if(!event.target.value) {
     return;
@@ -160,16 +173,5 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-function resetEffect() {
-  sliderEffectWrapper.classList.add('hidden');
-  valueElement.value = '';
-  uploadedImagePreview.className = '';
-  uploadedImagePreview.classList.add('img-upload__preview');
-  uploadedImagePreview.style.filter = '';
-}
-function resetScale() {
-  imageSize.value = `${100}%`;
-  uploadedImagePreview.style.transform = '';
-}
 
 export {resetEffect, resetScale, imageScaleHandler, imageEffectHandler};
