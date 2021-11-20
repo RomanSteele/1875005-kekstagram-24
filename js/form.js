@@ -29,6 +29,21 @@ function preventEsc(event) {
   event.stopPropagation();
 }
 
+function hideErrorMessage(event) {
+  if(isEsc(event.key)){
+    hideAlert(false);
+    document.removeEventListener('keydown', hideErrorMessage);
+    document.removeEventListener('click', hideErrorHandler);
+  }
+}
+function hideSuccessMessage(event) {
+  if(isEsc(event.key)){
+    hideAlert(true);
+    document.removeEventListener('keydown', hideSuccessMessage);
+    document.removeEventListener('click', hideSuccessHandler);
+  }
+}
+
 function hashTagHandler(evt) {
   const hashtagValue = String(evt.target.value.toLowerCase().trim());
   const hashTags = hashtagValue.split(' ');
@@ -103,20 +118,6 @@ function hideErrorHandler({target}) {
 function hideImageForm(event) {
   if(isEsc(event.key)){
     hideFormAdder();
-  }
-}
-function hideErrorMessage(event) {
-  if(isEsc(event.key)){
-    hideAlert(false);
-    document.removeEventListener('keydown', hideErrorMessage);
-    document.removeEventListener('click', hideErrorHandler);
-  }
-}
-function hideSuccessMessage(event) {
-  if(isEsc(event.key)){
-    hideAlert(true);
-    document.removeEventListener('keydown', hideSuccessMessage);
-    document.removeEventListener('click', hideSuccessHandler);
   }
 }
 
