@@ -34,11 +34,6 @@ function hideFormAdder(){
   hashTagInput.removeEventListener('keyup', hashTagHandler);
 }
 
-shutDownFormButton.addEventListener('click', ()=>{
-  hideFormAdder();
-});
-
-document.addEventListener('keydown', hideImageForm);
 
 function hideImageForm(event) {
   if(isEsc(event.key)){
@@ -59,18 +54,6 @@ function hideSuccessMessage(event) {
     document.removeEventListener('click', hideSuccessHandler);
   }
 }
-
-formElement.addEventListener('change', () => {
-  showFormAdder();
-});
-
-descriptionInput.addEventListener('keydown', (evt) => {
-  evt.stopPropagation();
-});
-
-
-hashTagInput.addEventListener(('keydown'), preventEsc);
-hashTagInput.addEventListener('keyup', hashTagHandler);
 
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
@@ -104,7 +87,6 @@ const setUserFormSubmit = (onSuccess) => {
       });
   });
 };
-
 
 function preventEsc(event) {
   event.stopPropagation();
@@ -169,5 +151,22 @@ function hideErrorHandler({target}) {
   document.removeEventListener('keydown', hideErrorMessage);
 }
 
+shutDownFormButton.addEventListener('click', ()=>{
+  hideFormAdder();
+});
+
+document.addEventListener('keydown', hideImageForm);
+
+formElement.addEventListener('change', () => {
+  showFormAdder();
+});
+
+descriptionInput.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+});
+
+
+hashTagInput.addEventListener(('keydown'), preventEsc);
+hashTagInput.addEventListener('keyup', hashTagHandler);
 
 export {setUserFormSubmit,hideFormAdder};
