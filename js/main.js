@@ -4,6 +4,7 @@ import {setUserFormSubmit,hideFormAdder} from './form.js';
 import {debounce} from './utils/debounce.js';
 import './picture.js';
 const RANDOM_POSTS_ARRAY_LENGTH = 10;
+const POPULAR_POSTS_ARRAY_LENGTH = 10;
 
 const postsWrapper = document.querySelector('.pictures');
 const renderSimilarList = (similarPosts) => {
@@ -34,7 +35,7 @@ fetch('https://24.javascript.pages.academy/kekstagram/data')
   .then((data) => {
     renderSimilarList(data);
 
-    const popular = [...data].sort((adx, bdx) => bdx.comments.length - adx.comments.length).slice(0, 10);
+    const popular = [...data].sort((adx, bdx) => bdx.comments.length - adx.comments.length).slice(0, POPULAR_POSTS_ARRAY_LENGTH);
     const randomPosts = [];
 
     for(let idx = 0; idx < RANDOM_POSTS_ARRAY_LENGTH; idx++) {
