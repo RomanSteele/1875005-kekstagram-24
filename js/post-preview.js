@@ -5,6 +5,8 @@ const closeButtonElement = document.querySelector('.big-picture__cancel');
 const loadMoreComments = document.querySelector('.comments-loader');
 const commentsDisplayed = postPreview.querySelector('.showed__comments-count');
 
+import { isEsc } from './utils/helpers.js';
+
 let postComments = [];
 let displayedComments = [];
 
@@ -27,7 +29,7 @@ closeButtonElement.addEventListener('click', ()=>{
 });
 
 document.addEventListener('keydown', (evt) =>{
-  if(evt.key === 'Escape') {
+  if(isEsc(evt.key)) {
     hidePostPreview();
   }
 });

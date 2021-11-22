@@ -12,6 +12,11 @@ const EFFECT_TYPES = {
   heat: 'heat',
 };
 
+const MIN_IMAGE_SCALE = 25;
+const MAX_IMAGE_SCALE = 100;
+const IMAGE_SCALE_CHANGE_STEP = 25;
+
+
 const makeImageSmaller = document.querySelector('.scale__control--smaller');
 const makeImageBigger = document.querySelector('.scale__control--bigger');
 const imageSize = document.querySelector('.scale__control--value');
@@ -19,19 +24,19 @@ const imageSize = document.querySelector('.scale__control--value');
 function imageScaleHandler(event) {
   const biggerClass = 'scale__control--bigger';
   if(event.target.classList.contains(biggerClass)) {
-    if(parseInt(imageSize.value, 10) < 100 && 25 <= parseInt(imageSize.value, 10)) {
-      imageSize.value = `${parseInt(imageSize.value,10) + 25}%`;
+    if(parseInt(imageSize.value, 10) < MAX_IMAGE_SCALE && MIN_IMAGE_SCALE <= parseInt(imageSize.value, 10)) {
+      imageSize.value = `${parseInt(imageSize.value,10) + IMAGE_SCALE_CHANGE_STEP}%`;
       uploadedImagePreview.style.transform = `scale(0.${parseInt(imageSize.value,10)})`;
     }
 
-    if(parseInt(imageSize.value, 10) === 100) {
+    if(parseInt(imageSize.value, 10) === MAX_IMAGE_SCALE) {
       uploadedImagePreview.style.transform = 'scale(1)';
     }
     return;
   }
 
-  if(parseInt(imageSize.value, 10) <= 100 && 25 < parseInt(imageSize.value, 10)) {
-    imageSize.value = `${parseInt(imageSize.value, 10) - 25}%`;
+  if(parseInt(imageSize.value, 10) <= MAX_IMAGE_SCALE && MIN_IMAGE_SCALE < parseInt(imageSize.value, 10)) {
+    imageSize.value = `${parseInt(imageSize.value, 10) - IMAGE_SCALE_CHANGE_STEP}%`;
     uploadedImagePreview.style.transform = `scale(0.${parseInt(imageSize.value, 10)})`;
   }
 }
@@ -52,7 +57,7 @@ function resetEffect() {
   uploadedImagePreview.style.filter = '';
 }
 function resetScale() {
-  imageSize.value = `${100}%`;
+  imageSize.value = `${MAX_IMAGE_SCALE}%`;
   uploadedImagePreview.style.transform = '';
 }
 
@@ -68,7 +73,8 @@ function imageEffectHandler(event) {
   }
 
   if(effectType === EFFECT_TYPES.chrome) {
-    updateEffect(1, EFFECT_TYPES.chrome);
+    const EFFECT_CHROME_INITIAL_VALUE = 1;
+    updateEffect(EFFECT_CHROME_INITIAL_VALUE, EFFECT_TYPES.chrome);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -84,7 +90,8 @@ function imageEffectHandler(event) {
   }
 
   if(effectType === EFFECT_TYPES.sepia) {
-    updateEffect(1, EFFECT_TYPES.sepia);
+    const EFFECT_SEPIA_INITIAL_VALUE = 1;
+    updateEffect(EFFECT_SEPIA_INITIAL_VALUE, EFFECT_TYPES.sepia);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -100,7 +107,8 @@ function imageEffectHandler(event) {
   }
 
   if(effectType === EFFECT_TYPES.marvin) {
-    updateEffect(100, EFFECT_TYPES.marvin);
+    const EFFECT_MARVIN_INITIAL_VALUE = 100;
+    updateEffect(EFFECT_MARVIN_INITIAL_VALUE, EFFECT_TYPES.marvin);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -116,7 +124,8 @@ function imageEffectHandler(event) {
   }
 
   if(effectType === EFFECT_TYPES.phobos) {
-    updateEffect(3, EFFECT_TYPES.phobos);
+    const EFFECT_PHOBOS_INITIAL_VALUE = 3;
+    updateEffect(EFFECT_PHOBOS_INITIAL_VALUE, EFFECT_TYPES.phobos);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -132,7 +141,8 @@ function imageEffectHandler(event) {
   }
 
   if(effectType === EFFECT_TYPES.heat) {
-    updateEffect(3, EFFECT_TYPES.heat);
+    const EFFECT_HEAT_INITIAL_VALUE = 3;
+    updateEffect(EFFECT_HEAT_INITIAL_VALUE, EFFECT_TYPES.heat);
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 1,
